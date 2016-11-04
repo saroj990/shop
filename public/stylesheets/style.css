@@ -11,10 +11,23 @@
     margin-bottom: 5px;
 }
 
-.container.header-top-margin {
+.header-top-margin {
     margin-top: 100px;
 }
 
 .margin-top {
     margin-top: 5px;
+}
+
+.small-thumb {
+    background-color: black;
+    width: 80px;
+    height: 80px;
+    display: inline-block;
+    /* makes it fit in like an <img> */
+    background-size: cover;
+    /* or contain */
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin-bottom: 5px;
 }

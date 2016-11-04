@@ -1,7 +1,7 @@
 {{#each products}}
   <div class="row">
     {{#each this}}
-        <div class="col-sm-4">
+        <div class="col-md-4">
           <div class="thumbnail">
             <img src="{{this.imagePath}}" alt="..." height="100" >
             <div class="caption">
@@ -11,7 +11,7 @@
               </div>
               <div class="margin-top">
                 <span>price: {{this.price}}</span>    
-                <button class="btn btn-success">Add to shopping cart</button>            
+                <a href="/addToCart/{{this._id}}" class="btn btn-success">Add to shopping cart</a>
               </div>         
             </div>
           </div>

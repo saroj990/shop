@@ -1,0 +1,31 @@
+<div class="row">
+  {{#if products.length}}
+      <ul class="list-group">
+       {{#each products}}
+        <li class="col-xs-12 list-group-item">
+          <span class="col-xs-12 col-sm-2">
+            <img src="{{this.item.imagePath}}" class="small-thumb">
+          </span>          
+          <span class="col-xs-12 col-sm-6">{{this.item.title}}</span>
+          <span class="col-xs-12 col-sm-1">Price: &#8377;{{this.item.price}}</span>    
+          <span class="col-xs-12 col-sm-1">Quantity:{{this.qty}}</span>  
+          <a class="col-xs-12 col-sm-2" href="/delete-cart-item/{{this.item._id}}">
+            <div class="btn btn-warning pull-right">Delete</div>
+          </a>        
+        </li>
+        {{/each}}
+      </ul>
+  {{else}}
+    <div class="alert alert-info">
+      No cart item is present
+    </div>
+  {{/if}}  
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="pull-right">
+      <strong>Total: &#8377;{{totalPrice}}</strong>
+      <button class="btn btn-success">CheckOut</button>
+    </div>    
+  </div>
+</div>

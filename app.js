@@ -9,6 +9,7 @@ var expressHbs = require('express-handlebars');
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 var session = require('express-session');
+var mongoStore = require('connect-mongo')(session);
 var passport = require('passport');
 var flash = require('connect-flash');
 var routes = require('./routes/index');
@@ -38,13 +39,24 @@ app.use(cookieParser());
 app.use(session({
     secret: 'mysupersecret',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: new mongoStore({
+        mongooseConnection: mongoose.connection
+    }),
+    cookie: {
+        maxAge: 100 * 60 * 60 * 24
+    }
 }));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function(req, res, next) {
+    res.locals.login = req.isAuthenticated();
+    res.locals.session = req.session;
+    next();
+});
 
 app.use('/user', users);
 app.use('/', routes);
