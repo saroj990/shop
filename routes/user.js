@@ -8,8 +8,6 @@ router.use(csrfProtection);
 
 router.get('/signup', function(req, res) {
     var messages = req.flash('error');
-    console.log("messages!!!!!")
-    console.log(messages)
     res.render('user/signup', {
         csrfToken: req.csrfToken(),
         messages: messages,
@@ -26,28 +24,41 @@ router.get('/signin', function(req, res, next) {
 });
 
 router.post('/signup', passport.authenticate('local.signup', {
-    successRedirect: '/user/profile',
     failureRedirect: '/user/signup',
     failureFlash: true
         //failureFlash: 'Invalid username or password.'
 
-}));
+}), function(req, res, next) {
+    if (req.session.oldUrl) {
+        res.redirect(req.session.oldUrl);
+        req.session.oldUrl = null;
+    } else {
+        res.redirect('/user/profile');
+    }
+});
 
 router.post('/signin', passport.authenticate('local.signin', {
-    successRedirect: '/user/profile',
     failureRedirect: '/user/signin',
     failureFlash: true
         //failureFlash: 'Invalid username or password.'
 
-}));
+}), function(req, res, next) {
+    if (req.session.oldUrl) {
+        res.redirect(req.session.oldUrl);
+        req.session.oldUrl = null;
+    } else {
+        res.redirect('/');
+    }
+});
 
 
 router.get('/profile', isLoggedIn, function(req, res) {
     res.render('user/profile');
 });
 
-router.get('/logout', function() {
+router.get('/logout', function(req, res) {
     req.logout();
+    req.session.userEmail = "";
     res.redirect("/");
 });
 

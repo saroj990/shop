@@ -14,6 +14,7 @@ var passport = require('passport');
 var flash = require('connect-flash');
 var routes = require('./routes/index');
 var users = require('./routes/user');
+var carts = require('./routes/cart');
 
 var app = express();
 mongoose.connect('mongodb://localhost:27017/shopping');
@@ -58,8 +59,16 @@ app.use(function(req, res, next) {
     next();
 });
 
+app.use(function(req, res, next) {
+    if (req.user) {
+        res.locals.session.userEmail = req.user.email;
+    }
+    next();
+});
+
 app.use('/user', users);
 app.use('/', routes);
+app.use('/cart', carts)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -91,6 +100,9 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
+// var listener = app.listen(3000, function() {
+//     console.log('Listening on port ' + listener.address().port); //Listening on port 3000
+// });
 
 
 module.exports = app;

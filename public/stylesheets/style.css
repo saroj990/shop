@@ -1,7 +1,7 @@
 .thumbnail {
     background-color: black;
     width: 300px;
-    height: 490px;
+    height: 420px;
     display: inline-block;
     /* makes it fit in like an <img> */
     background-size: cover;
@@ -30,4 +30,12 @@
     background-position: center center;
     background-repeat: no-repeat;
     margin-bottom: 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+.thumbnail-small-font {
+    font-size: 10px;
 }
